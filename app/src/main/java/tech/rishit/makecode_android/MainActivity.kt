@@ -1,98 +1,53 @@
 package tech.rishit.makecode_android
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.mahfa.dnswitch.DayNightSwitch
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var dayNightSwitch: DayNightSwitch
-    private lateinit var backgroundView: View
     private lateinit var myWebView: WebView
-    private lateinit var github: FloatingActionButton
-    private lateinit var projectName: TextView
-    private lateinit var footer: TextView
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.decorView.systemUiVisibility = (
+            View.SYSTEM_UI_FLAG_FULLSCREEN
+            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        )
+
         setContentView(R.layout.activity_main)
 
-        dayNightSwitch = findViewById(R.id.dayNight)
-        backgroundView = findViewById(R.id.background_view)
         myWebView = findViewById(R.id.webview)
-        github = findViewById(R.id.github)
-        projectName = findViewById(R.id.project_name)
-        footer = findViewById(R.id.footer)
 
         myWebView.settings.javaScriptEnabled = true
         myWebView.settings.domStorageEnabled = true
         myWebView.webViewClient = WebViewClient()
 
         val projectUrl = """
-<div style="position:relative;height:0;padding-bottom:117.6%;overflow:hidden;">
-<iframe style="position:absolute;top:0;left:0;width:100%;height:100%;"
-src="https://arcade.makecode.com/---run?id=S78527-42633-44120-54871"
-allowfullscreen="allowfullscreen"
-sandbox="allow-popups allow-forms allow-scripts allow-same-origin"
-frameborder="0"></iframe>
-</div>
-""".trimIndent()
+            <div style="position:relative;height:0;padding-bottom:117.6%;overflow:hidden;">
+            <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;"
+            src="https://arcade.makecode.com/---run?id=S78527-42633-44120-54871"
+            allowfullscreen="allowfullscreen"
+            sandbox="allow-popups allow-forms allow-scripts allow-same-origin"
+            frameborder="0"></iframe>
+            </div>
+        """.trimIndent()
 
-myWebView.loadDataWithBaseURL(
-    "https://arcade.makecode.com/",
-    projectUrl,
-    "text/html",
-    "UTF-8",
-    null
-)
-        dayNightSwitch.setDuration(450)
-
-        dayNightSwitch.setListener { is_night ->
-            if (is_night) {
-                Toast.makeText(this@MainActivity, "Night Mode!", Toast.LENGTH_SHORT).show()
-                projectName.setTextColor(Color.WHITE)
-                footer.setTextColor(Color.WHITE)
-                backgroundView.alpha = 1f
-            } else {
-                Toast.makeText(this@MainActivity, "Day Mode!", Toast.LENGTH_SHORT).show()
-                projectName.setTextColor(Color.DKGRAY)
-                footer.setTextColor(Color.DKGRAY)
-                backgroundView.alpha = 0f
-            }
-        }
-
-        github.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(getString(R.string.github_project_url))
-            startActivity(intent)
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.author_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.credits) {
-            val intent = Intent(this, Credits::class.java)
-            startActivity(intent)
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
+        myWebView.loadDataWithBaseURL(
+            "https://arcade.makecode.com/",
+            projectUrl,
+            "text/html",
+            "UTF-8",
+            null
+        )
     }
 }
