@@ -41,8 +41,23 @@ class MainActivity : AppCompatActivity() {
         myWebView.settings.domStorageEnabled = true
         myWebView.webViewClient = WebViewClient()
 
-        myWebView.loadUrl("https://arcade.makecode.com/---codeembed#pub:S78527-42633-44120-54871")
+        val projectUrl = """
+<div style="position:relative;height:calc(300px + 5em);width:100%;overflow:hidden;">
+<iframe style="position:absolute;top:0;left:0;width:100%;height:100%;"
+src="https://arcade.makecode.com/---codeembed#pub:S78527-42633-44120-54871"
+allowfullscreen="allowfullscreen"
+frameborder="0"
+sandbox="allow-scripts allow-same-origin"></iframe>
+</div>
+""".trimIndent()
 
+myWebView.loadDataWithBaseURL(
+    "https://arcade.makecode.com/",
+    projectUrl,
+    "text/html",
+    "UTF-8",
+    null
+)
         dayNightSwitch.setDuration(450)
 
         dayNightSwitch.setListener { is_night ->
