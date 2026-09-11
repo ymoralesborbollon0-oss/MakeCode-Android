@@ -22,7 +22,7 @@
 
     <string name="app_name">Colores Y Formas</string>
     <string name="project_name">MakeCode on Android</string>
-    <string name="project_id">S78527-42633-44120-54871</string>
+    <string name="project_id">"_S78527-42633-44120-54871/"</string>
     <string name="content_description_github">GitHub repo for this project</string>
     <string name="github_project_url">https://github.com/Rishit-dagli/MakeCode-Android</string>
     <string name="footer_description">Built by Rishit Dagli</string>
