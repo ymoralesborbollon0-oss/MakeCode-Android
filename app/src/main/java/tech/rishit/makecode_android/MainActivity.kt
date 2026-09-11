@@ -39,8 +39,6 @@ class MainActivity : AppCompatActivity() {
 
         myWebView.settings.javaScriptEnabled = true
         myWebView.settings.domStorageEnabled = true
-        myWebView.settings.allowFileAccess = true
-        myWebView.settings.allowContentAccess = true
         myWebView.webViewClient = WebViewClient()
 
         myWebView.loadUrl("https://arcade.makecode.com/S78527-42633-44120-54871")
@@ -79,12 +77,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             return true
         }
-        return super.onOptionsItemSelected(item)
-    }
-}
-            startActivity(intent)
-        }
 
-        return true
+        return super.onOptionsItemSelected(item)
     }
 }
