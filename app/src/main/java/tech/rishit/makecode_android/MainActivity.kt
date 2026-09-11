@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         myWebView.settings.domStorageEnabled = true
         myWebView.webViewClient = WebViewClient()
 
-        myWebView.loadUrl("https://www.google.com")
+        myWebView.loadUrl("https://arcade.makecode.com/S78527-42633-44120-54871")
 
         dayNightSwitch.setDuration(450)
 
