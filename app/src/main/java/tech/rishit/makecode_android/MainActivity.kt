@@ -1,21 +1,3 @@
-/*
- * Created by Rishit Dagli on 6/12/20 3:05 PM
- * Copyright (c) 2020.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- *
- * You may obtain a copy of the License at-
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License
- */
-
 package tech.rishit.makecode_android
 
 import android.annotation.SuppressLint
@@ -27,11 +9,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-
 import com.mahfa.dnswitch.DayNightSwitch
 
 class MainActivity : AppCompatActivity() {
@@ -48,28 +30,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        dayNightSwitch = findViewById<View>(R.id.dayNight) as DayNightSwitch
+        dayNightSwitch = findViewById(R.id.dayNight)
         backgroundView = findViewById(R.id.background_view)
         myWebView = findViewById(R.id.webview)
         github = findViewById(R.id.github)
         projectName = findViewById(R.id.project_name)
-        this.footer = findViewById(R.id.footer)
+        footer = findViewById(R.id.footer)
 
         myWebView.settings.javaScriptEnabled = true
+        myWebView.settings.domStorageEnabled = true
+        myWebView.settings.allowFileAccess = true
+        myWebView.settings.allowContentAccess = true
+        myWebView.webViewClient = WebViewClient()
 
-        val projectUrl: String = "<div style=\"position:relative;height:0;padding-bottom:117.6%;" +
-                "overflow:hidden;\"><iframe style=\"position:absolute;top:0;left:0;width:100%;" +
-                "height:100%;\" src=\"https://arcade.makecode.com/---run?" +
-                "id=" +
-                getString(R.string.project_id) +
-                " " +
-                "allowfullscreen=\"allowfullscreen\" sandbox=\"allow-popups allow-forms allow-" +
-                "scripts allow-same-origin\" frameborder=\"0\"></iframe></div"
-
-        val mimeType = getString(R.string.mimetype)
-        val encoding = getString(R.string.encoding)
-
-        myWebView.loadDataWithBaseURL("", projectUrl, mimeType, encoding, "")
+        myWebView.loadUrl("https://arcade.makecode.com/S78527-42633-44120-54871")
 
         dayNightSwitch.setDuration(450)
 
@@ -78,26 +52,19 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "Night Mode!", Toast.LENGTH_SHORT).show()
                 projectName.setTextColor(Color.WHITE)
                 footer.setTextColor(Color.WHITE)
-
-                this.backgroundView.alpha = 1f
+                backgroundView.alpha = 1f
             } else {
                 Toast.makeText(this@MainActivity, "Day Mode!", Toast.LENGTH_SHORT).show()
                 projectName.setTextColor(Color.DKGRAY)
                 footer.setTextColor(Color.DKGRAY)
-
-                this.backgroundView.alpha = 0f
+                backgroundView.alpha = 0f
             }
         }
 
-        fun openUrl(url: String): Boolean {
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
-            return true
-        }
-
         github.setOnClickListener {
-            openUrl(getString(R.string.github_project_url))
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(getString(R.string.github_project_url))
+            startActivity(intent)
         }
     }
 
@@ -107,10 +74,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id: Int = item.itemId
-
-        if (id == R.id.credits) {
+        if (item.itemId == R.id.credits) {
             val intent = Intent(this, Credits::class.java)
+            startActivity(intent)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+}
             startActivity(intent)
         }
 
